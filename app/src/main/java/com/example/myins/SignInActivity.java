@@ -57,7 +57,7 @@ public class SignInActivity extends AppCompatActivity {
         else
         {
             final ProgressDialog progressDialog= new ProgressDialog(this);
-            progressDialog.setMessage("please wait a moment...");
+            progressDialog.setMessage("please wait while logging ...");
             progressDialog.setTitle("log in");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
@@ -75,10 +75,11 @@ public class SignInActivity extends AppCompatActivity {
                     }
                     else
                     {
+                        progressDialog.dismiss();
                         String messaqge =task.getException().toString();
                         Toast.makeText(SignInActivity.this,"Error :"+messaqge,Toast.LENGTH_LONG).show();
                         FirebaseAuth.getInstance().signOut();
-                        progressDialog.dismiss();
+
                     }
 
                 }

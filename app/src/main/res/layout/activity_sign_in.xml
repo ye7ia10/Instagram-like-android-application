@@ -13,9 +13,11 @@
         android:src="@drawable/instagram"
         android:tint="@android:color/white"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="180dp">
+        android:layout_marginTop="150dp">
     </ImageView>
     <EditText
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
         android:id="@+id/email_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +30,8 @@
         android:hint="Email....">
     </EditText>
     <EditText
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
         android:id="@+id/password_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,11 +62,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/signup_link_btn"
-        android:layout_alignParentBottom="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
+        android:layout_below="@+id/signin_btn"
         android:background="@color/colorAccent"
         android:text="Need New Account? Sign Up"
         android:textAllCaps="false"

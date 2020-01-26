@@ -72,7 +72,7 @@ public class SignUpActivity extends AppCompatActivity {
         else
         {
             final ProgressDialog progressDialog= new ProgressDialog(this);
-            progressDialog.setMessage("please wait a moment...");
+            progressDialog.setMessage("please wait While making account ...");
             progressDialog.setTitle("sign up");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
