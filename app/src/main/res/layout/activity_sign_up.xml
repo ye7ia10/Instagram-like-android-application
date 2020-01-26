@@ -18,7 +18,6 @@
         android:id="@+id/full_name_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/inputs_background"
         android:padding="10dp"
         android:layout_below="@id/instgram_logo"
         android:layout_marginLeft="20dp"
@@ -31,7 +30,6 @@
         android:id="@+id/user_name_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/inputs_background"
         android:padding="10dp"
         android:layout_below="@id/full_name_signup"
         android:layout_marginLeft="20dp"
@@ -44,7 +42,6 @@
         android:id="@+id/email_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/inputs_background"
         android:padding="10dp"
         android:layout_below="@id/user_name_signup"
         android:layout_marginLeft="20dp"
@@ -57,7 +54,6 @@
         android:id="@+id/password_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/inputs_background"
         android:padding="10dp"
         android:layout_below="@id/email_signup"
         android:layout_marginLeft="20dp"
@@ -74,11 +70,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="6dp"
-        android:background="@android:color/white"
+        android:background="@color/colorAccent"
         android:text="register"
         android:textAllCaps="false"
         android:textSize="17dp"
-        android:textColor="@android:color/black">
+        android:textColor="@android:color/white">
 
     </Button>
     <Button

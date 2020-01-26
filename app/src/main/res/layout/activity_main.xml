@@ -7,6 +7,12 @@
     tools:context=".MainActivity">
 
 
+  <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+    android:layout_above="@+id/bot"
+    android:id="@+id/frag_container">
+  </FrameLayout>
   <com.google.android.material.appbar.AppBarLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -17,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bottom_nav"
-        app:itemIconTint="@color/colorAccent"
+        app:itemIconTint="@color/selector"
         app:labelVisibilityMode="unlabeled"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/bottom_navigation"

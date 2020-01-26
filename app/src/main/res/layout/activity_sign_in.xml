@@ -19,7 +19,6 @@
         android:id="@+id/email_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/inputs_background"
         android:padding="10dp"
         android:layout_below="@id/instgram_logo"
         android:layout_marginLeft="20dp"
@@ -32,7 +31,6 @@
         android:id="@+id/password_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/inputs_background"
         android:padding="10dp"
         android:layout_below="@id/email_signin"
         android:layout_marginLeft="20dp"
@@ -48,12 +46,12 @@
         android:layout_below="@id/password_signin"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="6dp"
-        android:background="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorAccent"
         android:text="log in"
         android:textAllCaps="false"
         android:textSize="17dp"
-        android:textColor="@android:color/black">
+        android:textColor="@android:color/white">
 
     </Button>
     <Button
@@ -65,7 +63,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:text="Need New Account? Sign Up"
         android:textAllCaps="false"
         android:textSize="17dp"

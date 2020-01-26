@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.HomeFragment">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/homeLayout"
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:id="@+id/home_ToolBar"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginTop="4dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/cam"
+                    android:src="@drawable/camera"
+                    android:layout_alignParentLeft="true"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/instagram"
+                    android:layout_toEndOf="@+id/cam"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/send_icon"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="4dp"
+                    />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Home"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp"
+        android:layout_centerVertical="true">
+    </TextView>
+
+
+</RelativeLayout>
