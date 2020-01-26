@@ -1,11 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".PostActivity">
+    tools:context=".PostActivity"
+    android:background="@drawable/back_ui">
 
 
 
-</RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_marginTop="4dp"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:id="@+id/cancel"
+                    android:src="@drawable/close"
+                    android:padding="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_alignParentLeft="true"/>
+
+            </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/postImg"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center"
+            android:src="@drawable/camera">
+        </ImageView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:hint="Caption"
+            android:id="@+id/caption"
+            android:maxLines="5"
+            android:layout_height="wrap_content">
+        </EditText>
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"
+            android:text="Post"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:id="@+id/postBtn"
+            ></Button>
+        
+    </LinearLayout>
+
+
+</LinearLayout>

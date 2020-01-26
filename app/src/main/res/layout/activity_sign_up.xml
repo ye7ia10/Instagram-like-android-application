@@ -67,7 +67,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="6dp"
-        android:inputType="numberPassword"
+        android:inputType="textPassword"
         android:hint="password...">
     </EditText>
     <Button
