@@ -53,7 +53,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/recycler_view_search"
-
+    android:visibility="gone"
     android:layout_below="@id/searchLayout">
 
 </androidx.recyclerview.widget.RecyclerView>
