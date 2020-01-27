@@ -32,6 +32,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:16.0.5'
     implementation 'com.google.firebase:firebase-database:16.0.4'
     implementation 'com.google.firebase:firebase-storage:16.0.4'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.12'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'

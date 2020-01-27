@@ -101,9 +101,9 @@ public class SignUpActivity extends AppCompatActivity {
         DatabaseReference userRef= FirebaseDatabase.getInstance().getReference().child("Users");
         HashMap<String,Object> userMap= new HashMap<>();
         userMap.put("uid",currentUserId);
-        userMap.put("full name",fullName);
-        userMap.put("user name",userName);
-        userMap.put("E-mail",user_email);
+        userMap.put("fullname",fullName);
+        userMap.put("username",userName);
+        userMap.put("email",user_email);
         userMap.put("bio","hey I am using insta");
         userMap.put("image","https://firebasestorage.googleapis.com/v0/b/myins-7aa34.appspot.com/o/default_images%2Fprofile.png?alt=media&token=b6eb9810-3c06-41d1-827c-c79aabd54139");
         userRef.child(currentUserId).setValue(userMap).addOnCompleteListener(this, new OnCompleteListener<Void>() {
