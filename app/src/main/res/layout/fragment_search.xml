@@ -34,10 +34,11 @@
                     android:id="@+id/search_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="5dp"
                     android:layout_marginEnd="10dp"
                     android:layout_toEndOf="@id/search_frag_icon"
                     android:layout_marginRight="19dp"
+                    android:backgroundTint="@android:color/transparent"
                     android:hint="Search ..."
                     />
 
