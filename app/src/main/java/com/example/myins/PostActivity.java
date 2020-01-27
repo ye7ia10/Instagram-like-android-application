@@ -56,6 +56,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(PostActivity.this, MainActivity.class));
+                finish();
             }
         });
 
