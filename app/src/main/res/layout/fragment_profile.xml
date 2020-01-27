@@ -13,4 +13,14 @@
         android:id="@+id/logoutb"
         ></Button>
 
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Settings"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/logoutb"
+        ></Button>
+
 </RelativeLayout>

@@ -14,8 +14,8 @@
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
         <activity android:name=".SignUpActivity"/>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".SignInActivity">
+        <activity android:name=".SignInActivity"/>
+        <activity android:name=".MainActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

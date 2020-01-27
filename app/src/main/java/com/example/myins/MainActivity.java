@@ -9,6 +9,8 @@ import com.example.myins.Fragments.NotificationsFragment;
 import com.example.myins.Fragments.ProfileFragment;
 import com.example.myins.Fragments.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,11 +20,21 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
     Fragment selector = null;
+    private FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        if (user == null){
+            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            this.finish();
+            startActivity(intent);
+        }
 
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(OnSelectedListner);
@@ -63,4 +75,25 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+
+    @Override
+    public void onBackPressed() {
+        if(bottomNavigationView.getSelectedItemId() == R.id.nav_home){
+            super.onBackPressed();
+        }else{
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (user == null){
+            Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+            this.finish();
+            startActivity(intent);
+        }
+    }
 }
