@@ -87,7 +87,7 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
+    @Override
     protected void onStart() {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser()!=null)
@@ -96,5 +96,5 @@ public class SignInActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-    }*/
+    }
 }
