@@ -77,7 +77,7 @@ public class SearchFragment extends Fragment {
     }
     private  void searchUsers(String s)
     {
-        Log.d("saasa", "searchUsers: sasasasasasasas\n");
+
         Query query = FirebaseDatabase.getInstance().getReference().child("Users").
                 orderByChild("fullname").startAt(s).endAt(s+"\uf8ff");
         query.addValueEventListener(new ValueEventListener() {
@@ -88,7 +88,7 @@ public class SearchFragment extends Fragment {
                 mUser.clear();
                 if(editText.getText().toString()!="")
                 {
-                    Log.d("saasa", "searchUsers: sasasasasasasas2\n");
+
                     for(DataSnapshot snapshot:dataSnapshot.getChildren())
                     {
                         User user= snapshot.getValue(User.class);

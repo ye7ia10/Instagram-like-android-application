@@ -15,19 +15,16 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/button_black_background"
-            android:id="@+id/searchToolBar"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            >
+
+            android:id="@+id/searchToolBar">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/search"
                     android:id="@+id/search_frag_icon">
 
@@ -37,8 +34,8 @@
                     android:id="@+id/search_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_toEndOf="@id/search_frag_icon"
                     android:layout_marginRight="19dp"
                     android:hint="Search ..."

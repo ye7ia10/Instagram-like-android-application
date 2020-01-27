@@ -2,6 +2,7 @@ package com.example.myins.Adapters;
 
 import android.content.Context;
 import android.media.MediaDrm;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +58,17 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.userName.setText(mUser.getUsername());
         Picasso.get().load(mUser.getImage()).placeholder(R.drawable.profile).into(holder.profileImage);
         checkFollowingStatus(holder,mUser.getUid());
+
+        /*Log.d("sa", "onBindViewHolder: "+firebaseUser.getUid()+"\n");
+        Log.d("sa", "onBindViewHolder2: "+mUser.getUid()+"\n");*/
+        if(mUser.getUid().equals(firebaseUser.getUid()))
+        {
+            holder.followBtn.setVisibility(View.GONE);
+        }
+        else
+        {
+            holder.followBtn.setVisibility(View.VISIBLE);
+        }
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
