@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="Settings"
+        android:id="@+id/account_settings"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/logoutb"
         ></Button>
