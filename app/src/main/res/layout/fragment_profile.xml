@@ -186,6 +186,80 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:id="@+id/fullNameProfile"
+                    android:text="Full Name"
+                    ></TextView>
+
+                <TextView
+                    android:layout_marginTop="3dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:text="Hey there I am using whatsapp h5a "
+                    android:id="@+id/BioProfile"
+                    android:maxLines="5"
+                    ></TextView>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/last"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_black_background"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/GridView"
+                    android:src="@drawable/grid"
+                    style="?android:attr/buttonBarButtonStyle"
+                    ></ImageView>
+
+                <ImageView
+                    android:layout_marginLeft="1dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/SavedPhotos"
+                    android:src="@drawable/save_large_icon"
+                    style="?android:attr/buttonBarButtonStyle"
+                    ></ImageView>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view_photos"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginTop="2dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:id="@+id/recycler_view_saved"/>
+
 
         </LinearLayout>
     </ScrollView>
