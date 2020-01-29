@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/profileUserName"
-                    android:textSize="16sp"
+                    android:textSize="20sp"
                     android:text="User Name"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
@@ -93,7 +93,7 @@
                            android:layout_height="wrap_content"
                            android:orientation="vertical">
                            <TextView
-                               android:text="5"
+                               android:text="0"
                                android:layout_width="wrap_content"
                                android:textColor="@android:color/black"
                                android:textSize="18sp"
@@ -120,7 +120,7 @@
                            android:layout_marginLeft="25dp"
                            android:orientation="vertical">
                            <TextView
-                               android:text="5"
+                               android:text="0"
                                android:layout_width="wrap_content"
                                android:textColor="@android:color/black"
                                android:textSize="18sp"
@@ -145,7 +145,7 @@
                            android:layout_marginLeft="25dp"
                            android:orientation="vertical">
                            <TextView
-                               android:text="5"
+                               android:text="0"
                                android:layout_width="wrap_content"
                                android:textColor="@android:color/black"
                                android:textSize="18sp"
@@ -209,8 +209,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@android:color/black"
-                    android:text="Hey there I am using whatsapp h5a "
+                    android:text="Hey there I am using whatsapp h5a"
                     android:id="@+id/BioProfile"
+                    android:textAlignment="viewStart"
                     android:maxLines="5"
                     ></TextView>
 
@@ -220,7 +221,7 @@
             <LinearLayout
                 android:id="@+id/last"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:background="@drawable/button_black_background"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"

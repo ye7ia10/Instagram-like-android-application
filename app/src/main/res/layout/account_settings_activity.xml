@@ -70,8 +70,9 @@
             android:layout_marginTop="10dp"
             android:text="Change Profile Photo"
             android:id="@+id/image_edit_text"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
             android:layout_below="@id/image_edit"/>
     </RelativeLayout>
     <TextView
@@ -135,20 +136,7 @@
         android:id="@+id/email_edit"
         android:backgroundTint="@android:color/secondary_text_light_nodisable"
         />
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorAccent"
-            android:textColor="@android:color/white"
-        android:text="Log out"
-            android:id="@+id/logoutb_edit"
-        />
-    </RelativeLayout>
+    
 </LinearLayout>
 
 
