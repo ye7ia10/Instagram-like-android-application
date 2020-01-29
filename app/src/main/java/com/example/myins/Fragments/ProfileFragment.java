@@ -8,6 +8,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import android.text.TextUtils;
@@ -20,7 +23,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myins.AccountSettingsActivity;
+import com.example.myins.Adapters.MyPostsAdapter;
 import com.example.myins.Adapters.UserAdapter;
+import com.example.myins.Adapters.postAdapter;
 import com.example.myins.Models.User;
 import com.example.myins.Models.post;
 import com.example.myins.R;
@@ -33,6 +38,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -49,6 +59,9 @@ public class ProfileFragment extends Fragment {
     private ImageView options;
     private String ProfileID;
     private int PostsCount = 0;
+    private RecyclerView recyclerView;
+    private List<post> list;
+    private MyPostsAdapter myPostsAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,6 +82,15 @@ public class ProfileFragment extends Fragment {
         options = view.findViewById(R.id.optionsProfile);
         gridit = view.findViewById(R.id.GridView);
         saved = view.findViewById(R.id.SavedPhotos);
+        recyclerView = view.findViewById(R.id.recycler_view_photos);
+
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
+
+        recyclerView.setLayoutManager(linearLayoutManager);
+        list = new ArrayList<>();
+        myPostsAdapter = new MyPostsAdapter(list , getContext());
+        recyclerView.setAdapter(myPostsAdapter);
 
 
         /**/
@@ -126,6 +148,7 @@ public class ProfileFragment extends Fragment {
             getUserDataOther();
 
         }
+        retrievePosts();
 
         return view;
     }
@@ -305,6 +328,31 @@ public class ProfileFragment extends Fragment {
                 {
                     settings.setText("Follow");
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void retrievePosts(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    list.clear();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        post posts = snapshot.getValue(post.class);
+                        if (posts.getPostUser().equals(ProfileID)){
+                            list.add(posts);
+                        }
+                    }
+                }
+                Collections.reverse(list);
+                myPostsAdapter.notifyDataSetChanged();
             }
 
             @Override
