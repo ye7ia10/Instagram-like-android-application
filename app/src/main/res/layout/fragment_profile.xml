@@ -228,16 +228,16 @@
                 android:layout_marginRight="5dp"
                 android:orientation="horizontal">
 
-                <ImageView
+                <ImageButton
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:id="@+id/GridView"
                     android:src="@drawable/grid"
                     style="?android:attr/buttonBarButtonStyle"
-                    ></ImageView>
+                    ></ImageButton>
 
-                <ImageView
+                <ImageButton
                     android:layout_marginLeft="1dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -245,7 +245,7 @@
                     android:id="@+id/SavedPhotos"
                     android:src="@drawable/save_large_icon"
                     style="?android:attr/buttonBarButtonStyle"
-                    ></ImageView>
+                    ></ImageButton>
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

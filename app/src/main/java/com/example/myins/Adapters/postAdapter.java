@@ -1,12 +1,15 @@
 package com.example.myins.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.myins.Fragments.ProfileFragment;
+import com.example.myins.MainActivity;
 import com.example.myins.Models.User;
 import com.example.myins.Models.post;
 import com.example.myins.R;
@@ -21,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHolder>{
@@ -74,6 +78,21 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
 
             }
         });
+
+        holder.profileimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = mcontext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileID", posts.getPostUser());
+                editor.apply();
+                ((FragmentActivity)mcontext).getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.frag_container,
+                        new ProfileFragment()).commit();
+                //MainActivity.bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+            }
+        });
+
+
 
     }
 

@@ -51,6 +51,8 @@ public class HomeFragment extends Fragment {
 
         Retrieve();
 
+
+
         return  view;
 
     }

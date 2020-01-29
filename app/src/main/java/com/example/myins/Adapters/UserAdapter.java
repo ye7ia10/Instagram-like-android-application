@@ -1,6 +1,7 @@
 package com.example.myins.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaDrm;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,8 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myins.Fragments.ProfileFragment;
+import com.example.myins.MainActivity;
 import com.example.myins.Models.User;
 import com.example.myins.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -69,6 +73,22 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         {
             holder.followBtn.setVisibility(View.VISIBLE);
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileID", mUser.getUid());
+                editor.apply();
+                ((FragmentActivity)mContext).getSupportFragmentManager()
+                   .beginTransaction().replace(R.id.frag_container,
+                        new ProfileFragment()).commit();
+                //MainActivity.bottomNavigationView.setSelectedItemId(R.id.nav_profile);
+
+            }
+        });
+
+
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

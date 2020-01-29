@@ -1,7 +1,10 @@
 package com.example.myins;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.example.myins.Fragments.HomeFragment;
@@ -15,10 +18,11 @@ import com.google.firebase.auth.FirebaseUser;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
+    BottomNavigationView bottomNavigationView;
     Fragment selector = null;
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
@@ -63,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                             selector = new NotificationsFragment();
                             break;
                         case R.id.nav_profile :
+                            SharedPreferences.Editor editor = getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                            editor.putString("profileID",firebaseAuth.getUid());
+                            editor.apply();
                             selector = new ProfileFragment();
                             break;
                     }
@@ -79,7 +86,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(bottomNavigationView.getSelectedItemId() == R.id.nav_home){
+        SharedPreferences sharedPreferences = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        String ProfileID = sharedPreferences.getString("profileID", "none");
+        if (!ProfileID.equals(firebaseAuth.getUid())){
+            bottomNavigationView.setSelectedItemId(R.id.nav_home);
+            SharedPreferences.Editor editor = getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+            editor.putString("profileID",firebaseAuth.getUid());
+            editor.apply();
+        }
+        else if(bottomNavigationView.getSelectedItemId() == R.id.nav_home){
             super.onBackPressed();
         }else{
             bottomNavigationView.setSelectedItemId(R.id.nav_home);
