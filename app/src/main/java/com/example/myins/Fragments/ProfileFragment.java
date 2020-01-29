@@ -26,18 +26,17 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
-        btn = view.findViewById(R.id.logoutb);
         settings=view.findViewById(R.id.account_settings);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        /*btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 firebaseAuth.signOut();
                 startActivity(new Intent(getContext(), SignInActivity.class));
                 getActivity().finish();
             }
-        });
+        });*/
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
