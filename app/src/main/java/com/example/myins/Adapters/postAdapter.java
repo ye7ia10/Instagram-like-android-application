@@ -13,6 +13,7 @@ import com.example.myins.MainActivity;
 import com.example.myins.Models.User;
 import com.example.myins.Models.post;
 import com.example.myins.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,6 +51,7 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
     public void onBindViewHolder(@NonNull final PostViewHolder holder, int position) {
 
         final post posts = list.get(position);
+
         Picasso.get().load(posts.getPostUrl()).into(holder.postimg);
         if (posts.getPostCaption().equals("")){
             holder.caption.setVisibility(View.GONE);
@@ -93,7 +95,85 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
         });
 
 
+        TestLikes(posts.getPostId(), holder.like);
+        getNumberOfLikes(holder.likeNumber, posts.getPostId());
+        holder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (holder.like.getTag().equals("UnLiked")){
+                   FirebaseDatabase
+                            .getInstance().getReference()
+                            .child("Likes")
+                            .child(posts.getPostId())
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
 
+                } else {
+                    FirebaseDatabase
+                            .getInstance().getReference()
+                            .child("Likes")
+                            .child(posts.getPostId())
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+
+                }
+            }
+        });
+
+
+    }
+
+
+    private void TestLikes(String postid , final ImageView imageView){
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Likes")
+                .child(postid);
+
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            if (dataSnapshot.child(user.getUid()).exists()) {
+                                imageView.setImageResource(R.drawable.heart_clicked);
+                                imageView.setTag("Liked");
+                            } else {
+                                imageView.setImageResource(R.drawable.heart_not_clicked);
+                                imageView.setTag("UnLiked");
+                            }
+
+                        } else {
+                            imageView.setImageResource(R.drawable.heart_not_clicked);
+                            imageView.setTag("UnLiked");
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void getNumberOfLikes(final TextView likes , String postid){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Likes")
+                .child(postid);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    likes.setText("Liked by " + dataSnapshot.getChildrenCount() + " Users");
+                } else {
+                    likes.setText("Liked by 0 Users");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
