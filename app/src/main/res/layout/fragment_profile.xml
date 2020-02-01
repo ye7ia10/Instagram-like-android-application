@@ -30,7 +30,6 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/profileUserName"
                     android:textSize="20sp"
-                    android:text="User Name"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:layout_alignParentLeft="true"/>

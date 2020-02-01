@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.myins.Fragments.ProfileFragment;
-import com.example.myins.MainActivity;
 import com.example.myins.Models.User;
 import com.example.myins.Models.post;
 import com.example.myins.R;
