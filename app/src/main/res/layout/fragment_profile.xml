@@ -40,7 +40,7 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/options"
+                    android:src="@drawable/lo"
                     android:layout_marginRight="10dp"
                     android:id="@+id/optionsProfile"
                     android:layout_marginTop="4dp"

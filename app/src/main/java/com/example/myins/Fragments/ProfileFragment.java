@@ -63,6 +63,12 @@ public class ProfileFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<post> list;
     private MyPostsAdapter myPostsAdapter;
+
+    private List<String> mysaves;
+    private RecyclerView recyclerView_saves;
+    private List<post> list_saves;
+    private MyPostsAdapter mysavesAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,16 +89,44 @@ public class ProfileFragment extends Fragment {
         options = view.findViewById(R.id.optionsProfile);
         gridit = view.findViewById(R.id.GridView);
         saved = view.findViewById(R.id.SavedPhotos);
-        recyclerView = view.findViewById(R.id.recycler_view_photos);
 
+        recyclerView = view.findViewById(R.id.recycler_view_photos);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
-
         recyclerView.setLayoutManager(linearLayoutManager);
         list = new ArrayList<>();
         myPostsAdapter = new MyPostsAdapter(list , getContext());
         recyclerView.setAdapter(myPostsAdapter);
 
+
+        recyclerView_saves = view.findViewById(R.id.recycler_view_saved);
+        recyclerView_saves.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager1 = new GridLayoutManager(getContext(), 3);
+        recyclerView_saves.setLayoutManager(linearLayoutManager1);
+        list_saves = new ArrayList<>();
+        mysaves = new ArrayList<>();
+        mysavesAdapter = new MyPostsAdapter(list_saves , getContext());
+        recyclerView_saves.setAdapter(mysavesAdapter);
+
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerView_saves.setVisibility(View.GONE);
+
+
+        gridit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.setVisibility(View.VISIBLE);
+                recyclerView_saves.setVisibility(View.GONE);
+            }
+        });
+
+        saved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                recyclerView.setVisibility(View.GONE);
+                recyclerView_saves.setVisibility(View.VISIBLE);
+            }
+        });
 
         /**/
         options.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +185,7 @@ public class ProfileFragment extends Fragment {
 
         }
         retrievePosts();
-
+        getMySaves();
         return view;
     }
 
@@ -312,6 +346,56 @@ public class ProfileFragment extends Fragment {
     }
 
 
+
+    private void getMySaves(){
+        FirebaseDatabase.getInstance()
+                .getReference()
+                .child("Saves")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()){
+                            mysaves.clear();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                mysaves.add(snapshot.getKey());
+                            }
+                            ShowSaves();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+    private void ShowSaves(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        list_saves.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                            post posts = snapshot.getValue(post.class);
+                            for (String str : mysaves){
+                                if (posts.getPostId().equals(str)){
+                                    list_saves.add(posts);
+                                }
+                            }
+                        }
+                        mysavesAdapter.notifyDataSetChanged();
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void checkFollowingStatus(final String userId) {
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference().child("follow")
