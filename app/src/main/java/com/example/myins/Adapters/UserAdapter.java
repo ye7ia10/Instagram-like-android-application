@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myins.Fragments.ProfileFragment;
 import com.example.myins.MainActivity;
+import com.example.myins.Models.Notification;
 import com.example.myins.Models.User;
 import com.example.myins.R;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -92,6 +94,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.followBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("zasasa", "onSuccess: \n");
                 if (holder.followBtn.getText() == "Follow") {
                     FirebaseDatabase.getInstance().getReference().child("follow")
                             .child(firebaseUser.getUid()).child("following")
@@ -102,8 +105,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                                     FirebaseDatabase.getInstance().getReference().child("follow")
                                             .child(mUser.getUid()).child("followers")
                                             .child(firebaseUser.getUid()).setValue(true);
+
+                                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Notifications")
+                                            .child(mUser.getUid());
+                                    String notiKey = reference.push().getKey();
+                                    HashMap<String,Object> notiMap = new HashMap<>();
+                                    notiMap.put("notificationId",notiKey);
+                                    notiMap.put("userId",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                    notiMap.put("seen",false);
+                                    notiMap.put("message"," started following you");
+                                    reference.child(notiKey).setValue(notiMap);
                                 }
                             });
+
                 }
                 else
                 {
@@ -116,6 +130,33 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                                     FirebaseDatabase.getInstance().getReference().child("follow")
                                             .child(mUser.getUid()).child("followers")
                                             .child(firebaseUser.getUid()).removeValue();
+                                    final DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Notifications")
+                                            .child(mUser.getUid());
+                                    reference.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.exists())
+                                            {
+                                                for(DataSnapshot snapshot:dataSnapshot.getChildren())
+                                                {
+                                                    Notification notification =snapshot.getValue(Notification.class);
+                                                    if(notification.getPostID()==null&&
+                                                            notification.getUserId()==
+                                                                    FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                                            &&holder.followBtn.getText() == "Follow")
+                                                    {
+                                                        reference.child(notification.getNotificationId()).removeValue();
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
                                 }
                             });
                 }
@@ -140,6 +181,32 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 else
                 {
                     holder.followBtn.setText("Follow");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        final DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Notifications")
+                .child(userId);
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                    for(DataSnapshot snapshot:dataSnapshot.getChildren())
+                    {
+                        Notification notification =snapshot.getValue(Notification.class);
+                        if(notification.getPostID()==null&&
+                                notification.getUserId()==
+                                        FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                &&holder.followBtn.getText() == "Follow")
+                        {
+                            reference.child(notification.getNotificationId()).removeValue();
+                        }
+                    }
                 }
             }
 

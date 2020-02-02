@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myins.Fragments.ProfileFragment;
+import com.example.myins.Models.Notification;
 import com.example.myins.Models.User;
 import com.example.myins.Models.post;
 import com.example.myins.R;
@@ -21,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -94,7 +97,7 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
         });
 
 
-        TestLikes(posts.getPostId(), holder.like);
+        TestLikes(posts.getPostId(),posts.getPostUser(), holder.like);
         getNumberOfLikes(holder.likeNumber, posts.getPostId());
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +108,17 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
                             .child("Likes")
                             .child(posts.getPostId())
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(true);
+                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Notifications")
+                            .child(posts.getPostUser());
+                    String notiKey = reference.push().getKey();
+                    HashMap<String,Object> notiMap = new HashMap<>();
+                    notiMap.put("notificationId",notiKey);
+                    notiMap.put("userId",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    notiMap.put("seen",false);
+                    notiMap.put("message"," liked your photo");
+                    notiMap.put("postID",posts.getPostId());
+                    reference.child(notiKey).setValue(notiMap);
+
 
                 } else {
                     FirebaseDatabase
@@ -112,6 +126,7 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
                             .child("Likes")
                             .child(posts.getPostId())
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).removeValue();
+
 
                 }
             }
@@ -143,7 +158,7 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
     }
 
 
-    private void TestLikes(String postid , final ImageView imageView){
+    private void TestLikes(final String postid , final String postUser, final ImageView imageView){
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
                 .child("Likes")
@@ -166,6 +181,33 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
                             imageView.setTag("UnLiked");
 
                         }
+                        final DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Notifications")
+                                .child(postUser);
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.exists())
+                                {
+                                    for(DataSnapshot snapshot:dataSnapshot.getChildren())
+                                    {
+                                        Notification notification =snapshot.getValue(Notification.class);
+
+                                        if(notification.getPostID()==postid&&
+                                                notification.getUserId()==
+                                                        FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                                &&imageView.getTag().equals("UnLiked"))
+                                        {
+                                            reference.child(notification.getNotificationId()).removeValue();
+                                        }
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
 
                     @Override

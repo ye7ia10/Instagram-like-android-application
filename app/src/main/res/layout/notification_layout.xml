@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="3dp">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+<de.hdodenhof.circleimageview.CircleImageView
+    android:layout_width="50dp"
+    android:layout_height="50dp"
+    android:id="@+id/profile_notifications"
+    android:layout_margin="10dp"
+    android:src="@drawable/profile"
+    />
+
+    <TextView
+        android:id="@+id/message_notifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="user name likes your post "
+        android:layout_toRightOf="@id/profile_notifications"
+        android:layout_toLeftOf="@id/notifications_pic"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="15dp"
+        android:textColor="@android:color/black"
+        />
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/back_ui"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/notifications_pic"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -26,6 +26,7 @@ import com.example.myins.AccountSettingsActivity;
 import com.example.myins.Adapters.MyPostsAdapter;
 import com.example.myins.Adapters.UserAdapter;
 import com.example.myins.Adapters.postAdapter;
+import com.example.myins.Models.Notification;
 import com.example.myins.Models.User;
 import com.example.myins.Models.post;
 import com.example.myins.R;
@@ -43,6 +44,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
@@ -155,6 +157,15 @@ public class ProfileFragment extends Fragment {
                                   FirebaseDatabase.getInstance().getReference().child("follow")
                                           .child(ProfileID).child("followers")
                                           .child(firebaseAuth.getCurrentUser().getUid()).setValue(true);
+                                  DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Notifications")
+                                          .child(ProfileID);
+                                  String notiKey = reference.push().getKey();
+                                  HashMap<String,Object> notiMap = new HashMap<>();
+                                  notiMap.put("notificationId",notiKey);
+                                  notiMap.put("userId",FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                  notiMap.put("seen",false);
+                                  notiMap.put("message"," started following you");
+                                  reference.child(notiKey).setValue(notiMap);
                               }
                           });
                   settings.setText("Following");
@@ -168,6 +179,32 @@ public class ProfileFragment extends Fragment {
                                   FirebaseDatabase.getInstance().getReference().child("follow")
                                           .child(ProfileID).child("followers")
                                           .child(firebaseAuth.getCurrentUser().getUid()).removeValue();
+                                  final DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Notifications")
+                                          .child(ProfileID);
+                                  reference.addValueEventListener(new ValueEventListener() {
+                                      @Override
+                                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                          if(dataSnapshot.exists())
+                                          {
+                                              for(DataSnapshot snapshot:dataSnapshot.getChildren())
+                                              {
+                                                  Notification notification =snapshot.getValue(Notification.class);
+                                                  if(notification.getPostID()==null&&
+                                                          notification.getUserId()==
+                                                                  FirebaseAuth.getInstance().getCurrentUser().getUid()
+                                                          &&settings.getText() == "Follow")
+                                                  {
+                                                      reference.child(notification.getNotificationId()).removeValue();
+                                                  }
+                                              }
+                                          }
+                                      }
+
+                                      @Override
+                                      public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                      }
+                                  });
                               }
                           });
                   settings.setText("Follow");
