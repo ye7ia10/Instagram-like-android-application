@@ -1,6 +1,7 @@
 package com.example.myins.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myins.CommentsActivity;
 import com.example.myins.Fragments.ProfileFragment;
 import com.example.myins.Models.Notification;
 import com.example.myins.Models.User;
@@ -96,9 +98,22 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
             }
         });
 
+        holder.comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = mcontext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("publisherID", posts.getPostUser());
+                editor.putString("publisherPostID", posts.getPostId());
+                editor.apply();
+                mcontext.startActivity(new Intent(mcontext, CommentsActivity.class));
+            }
+        });
+
+
 
         TestLikes(posts.getPostId(),posts.getPostUser(), holder.like);
         getNumberOfLikes(holder.likeNumber, posts.getPostId());
+        getNumberOfComments(holder.viewcomment, posts.getPostId());
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,6 +170,27 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
         });
 
 
+    }
+    private void getNumberOfComments(final TextView viewcomment, String postId) {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Comments")
+                .child(postId);
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    viewcomment.setText("View All " + dataSnapshot.getChildrenCount() + " Comments");
+                } else {
+                    viewcomment.setText("No Comments Yet");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
