@@ -211,11 +211,14 @@ public class ProfileFragment extends Fragment {
               }
             }
         });
+        options.setVisibility(View.VISIBLE);
         if (ProfileID.equals(firebaseAuth.getCurrentUser().getUid())){
             saved.setVisibility(View.VISIBLE);
             getUserDataSelf();
             settings.setText("Edit Profile");
+            options.setVisibility(View.VISIBLE);
         } else {
+            options.setVisibility(View.GONE);
             saved.setVisibility(View.GONE);
             checkFollowingStatus(ProfileID);
             getUserDataOther();

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/user_profile_comment"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/profile"
+            android:padding="5dp"
+            android:layout_alignParentLeft="true">
+
+        </de.hdodenhof.circleimageview.CircleImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toEndOf="@+id/user_profile_comment">
+
+            <TextView
+                android:id="@+id/user_name_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="user name"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+               >
+
+            </TextView>
+            <TextView
+                android:id="@+id/userComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/black"
+                android:layout_below="@id/user_name_comment">
+
+            </TextView>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

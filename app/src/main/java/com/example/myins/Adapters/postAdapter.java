@@ -109,6 +109,17 @@ public class postAdapter  extends  RecyclerView.Adapter<postAdapter.PostViewHold
             }
         });
 
+        holder.viewcomment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = mcontext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("publisherID", posts.getPostUser());
+                editor.putString("publisherPostID", posts.getPostId());
+                editor.apply();
+                mcontext.startActivity(new Intent(mcontext, CommentsActivity.class));
+            }
+        });
+
 
 
         TestLikes(posts.getPostId(),posts.getPostUser(), holder.like);
