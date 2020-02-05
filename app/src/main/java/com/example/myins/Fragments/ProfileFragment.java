@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +25,6 @@ import android.widget.TextView;
 
 import com.example.myins.AccountSettingsActivity;
 import com.example.myins.Adapters.MyPostsAdapter;
-import com.example.myins.Adapters.UserAdapter;
-import com.example.myins.Adapters.postAdapter;
 import com.example.myins.Models.Notification;
 import com.example.myins.Models.User;
 import com.example.myins.Models.post;
@@ -42,7 +41,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -72,7 +70,7 @@ public class ProfileFragment extends Fragment {
     private MyPostsAdapter mysavesAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         settings=view.findViewById(R.id.account_settings);
@@ -113,6 +111,30 @@ public class ProfileFragment extends Fragment {
         recyclerView.setVisibility(View.VISIBLE);
         recyclerView_saves.setVisibility(View.GONE);
 
+
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("button", "followers");
+                editor.apply();
+                ((FragmentActivity)getContext()).getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.frag_container,
+                        new FollowFragment()).commit();
+            }
+        });
+
+        following.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("button", "following");
+                editor.apply();
+                ((FragmentActivity)getContext()).getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.frag_container,
+                        new FollowFragment()).commit();
+            }
+        });
 
         gridit.setOnClickListener(new View.OnClickListener() {
             @Override
