@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="50dp"
+    android:layout_marginStart="10dp"
+    android:layout_height="wrap_content">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#f23b5a"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:id="@+id/story_photo"
+        android:src="@drawable/profile"/>
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="#afafaf"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:id="@+id/story_photo_seen"
+        android:visibility="gone"
+        android:src="@drawable/profile"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UserName"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:id="@+id/userName_Story"
+        android:maxLines="1"
+        ></TextView>
+
+
+</LinearLayout>

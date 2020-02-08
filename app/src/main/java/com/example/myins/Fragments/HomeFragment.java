@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.myins.Adapters.StoryAdapter;
 import com.example.myins.Adapters.postAdapter;
+import com.example.myins.Models.Story;
 import com.example.myins.Models.post;
 import com.example.myins.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +34,9 @@ public class HomeFragment extends Fragment {
     private postAdapter postAdapter;
     private List<post> listposts;
     private List<String> following;
-
+    private RecyclerView recyclerViewStory;
+    private StoryAdapter storyAdapter;
+    private List<Story> stories;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,12 +53,62 @@ public class HomeFragment extends Fragment {
         postAdapter = new postAdapter(getContext(), listposts);
         recyclerView.setAdapter(postAdapter);
 
+        recyclerViewStory = view.findViewById(R.id.recycleStories);
+        recyclerViewStory.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext()
+         , RecyclerView.HORIZONTAL , false);
+        linearLayoutManager1.setReverseLayout(true);
+        linearLayoutManager1.setStackFromEnd(true);
+        recyclerViewStory .setLayoutManager(linearLayoutManager1);
+        stories = new ArrayList<>();
+        storyAdapter = new StoryAdapter(getContext(), stories);
+        recyclerViewStory.setAdapter(storyAdapter);
+
+
         Retrieve();
+
+
+        getStories();
 
 
 
         return  view;
 
+    }
+
+    private void getStories() {
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                long time = System.currentTimeMillis();
+                stories.clear();
+                stories.add(new Story("", "" , 0 , 0,
+                 FirebaseAuth.getInstance().getCurrentUser().getUid()));
+                for (String id : following){
+                    Story story = null;
+                    int counter = 0;
+                    for (DataSnapshot snapshot : dataSnapshot.child(id).getChildren()){
+                        story = snapshot.getValue(Story.class);
+                        if (time > story.getTimeStart() && time < story.getTimeEnd()){
+                                counter++;
+                        }
+                    }
+                    if (counter > 0){
+                        stories.add(story);
+                    }
+                }
+                storyAdapter.notifyDataSetChanged();
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void Retrieve (){
