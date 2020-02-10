@@ -57,8 +57,6 @@ public class HomeFragment extends Fragment {
         recyclerViewStory.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext()
          , RecyclerView.HORIZONTAL , false);
-        linearLayoutManager1.setReverseLayout(true);
-        linearLayoutManager1.setStackFromEnd(true);
         recyclerViewStory .setLayoutManager(linearLayoutManager1);
         stories = new ArrayList<>();
         storyAdapter = new StoryAdapter(getContext(), stories);
@@ -68,7 +66,6 @@ public class HomeFragment extends Fragment {
         Retrieve();
 
 
-        getStories();
 
 
 
@@ -126,6 +123,7 @@ public class HomeFragment extends Fragment {
                     }
 
                     showPost();
+                    getStories();
                 }
             }
 

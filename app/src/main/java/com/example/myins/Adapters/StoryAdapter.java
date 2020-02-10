@@ -1,17 +1,18 @@
 package com.example.myins.Adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.myins.Models.Story;
 import com.example.myins.Models.User;
 import com.example.myins.R;
-import com.google.android.gms.common.internal.Objects;
+import com.example.myins.StoryActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,9 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,7 +53,8 @@ public class StoryAdapter extends  RecyclerView.Adapter<StoryAdapter.ViewHolder>
 
         if (holder.getAdapterPosition() != 0){
             seenStory(story.getUserId(), holder);
-        } else {
+        }
+        if (holder.getAdapterPosition() == 0) {
             myStory(holder.story_plus, holder.AddStoryText, false);
         }
 
@@ -132,7 +132,7 @@ public class StoryAdapter extends  RecyclerView.Adapter<StoryAdapter.ViewHolder>
                 long time = System.currentTimeMillis();
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Story story = dataSnapshot.getValue(Story.class);
+                        Story story = snapshot.getValue(Story.class);
                         if (time > story.getTimeStart() && time < story.getTimeEnd()) {
                             count++;
                         }
@@ -140,6 +140,32 @@ public class StoryAdapter extends  RecyclerView.Adapter<StoryAdapter.ViewHolder>
                 }
 
                     if (click){
+
+                        if (count > 0){
+                            final AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();
+                            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "View Story",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            //TODO view Story
+                                        }
+                                    });
+                            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Add Story",
+                                    new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            Intent intent
+                                                     = new Intent(mContext, StoryActivity.class);
+                                            mContext.startActivity(intent);
+                                            alertDialog.dismiss();
+                                        }
+                                    });
+                            alertDialog.show();
+                        } else {
+                            Intent intent
+                                    = new Intent(mContext, StoryActivity.class);
+                            mContext.startActivity(intent);
+                        }
 
                     } else {
 
@@ -165,14 +191,14 @@ public class StoryAdapter extends  RecyclerView.Adapter<StoryAdapter.ViewHolder>
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story")
                 .child(userID);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             int i = 0;
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     if (!snapshot.child("views")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).exists()
-                     && System.currentTimeMillis() < dataSnapshot.getValue(Story.class).getTimeEnd()){
+                     && System.currentTimeMillis() < snapshot.getValue(Story.class).getTimeEnd()){
                                             i++;
                     }
                 }
