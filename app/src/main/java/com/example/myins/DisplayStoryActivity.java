@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.myins.Models.Story;
 import com.example.myins.Models.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DisplayStoryActivity extends AppCompatActivity implements StoriesProgressView.StoriesListener {
@@ -36,6 +38,7 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
     private List<String> storries;
     private List<String> images;
     private String UserID;
+    private int x = 0;
 
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -115,6 +118,19 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
 
     @Override
     public void onComplete() {
+        if (!UserID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid()) && x == 0) {
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Notifications")
+                    .child(UserID);
+            String notiKey = reference.push().getKey();
+            HashMap<String, Object> notiMap = new HashMap<>();
+            notiMap.put("notificationId", notiKey);
+            notiMap.put("userId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+            notiMap.put("seen", false);
+            notiMap.put("message", " Viewed Your Story");
+            reference.child(notiKey).setValue(notiMap);
+            x++;
+
+        }
         finish();
     }
 
