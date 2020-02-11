@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.myins.DisplayStoryActivity;
 import com.example.myins.Models.Story;
 import com.example.myins.Models.User;
 import com.example.myins.R;
@@ -48,7 +50,7 @@ public class StoryAdapter extends  RecyclerView.Adapter<StoryAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        Story story = mList.get(position);
+        final Story story = mList.get(position);
         userInfo(holder, story.getUserId(), position);
 
         if (holder.getAdapterPosition() != 0){
@@ -64,7 +66,9 @@ public class StoryAdapter extends  RecyclerView.Adapter<StoryAdapter.ViewHolder>
                 if (holder.getAdapterPosition() == 0){
                     myStory(holder.story_plus, holder.AddStoryText, true);
                 } else {
-                    //TODO show story
+                   Intent intent = new Intent(mContext, DisplayStoryActivity.class);
+                   intent.putExtra("user", story.getUserId());
+                   mContext.startActivity(intent);
                 }
             }
         });
@@ -147,7 +151,10 @@ public class StoryAdapter extends  RecyclerView.Adapter<StoryAdapter.ViewHolder>
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            //TODO view Story
+                                            Intent intent = new Intent(mContext, DisplayStoryActivity.class);
+                                            intent.putExtra("user", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                            mContext.startActivity(intent);
+                                            alertDialog.dismiss();
                                         }
                                     });
                             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Add Story",
