@@ -9,3 +9,4 @@
   * Stories are supported with ability to show number of viewers and delete story .
   * Edit profile Settings.
   * Grid layout in profile.
+  
