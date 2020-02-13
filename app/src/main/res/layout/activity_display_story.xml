@@ -12,6 +12,7 @@
         android:id="@+id/theStory"
         android:src="@drawable/profile"
         android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         ></ImageView>
 
     <LinearLayout
@@ -79,5 +80,45 @@
 
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="3dp"
+        android:layout_margin="10dp"
+        android:background="#20000000">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/eyepng"
+            ></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seenCounter"
+            android:layout_marginLeft="5dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="0"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/delete"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:padding="1dp"
+        android:id="@+id/deleteStory"
+        android:background="#20000000"/>
 
 </RelativeLayout>

@@ -9,10 +9,14 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myins.Models.Story;
 import com.example.myins.Models.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,6 +43,10 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
     private List<String> images;
     private String UserID;
     private int x = 0;
+
+    private LinearLayout r_seen;
+    private TextView seenCount;
+    private ImageView deleteStory;
 
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
         @Override
@@ -70,8 +78,18 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
         StoryUsrName = findViewById(R.id.storyUsrName);
         reverse = findViewById(R.id.reverse);
         skip = findViewById(R.id.skip);
+        r_seen = findViewById(R.id.linea);
+        seenCount = findViewById(R.id.seenCounter);
+        deleteStory = findViewById(R.id.deleteStory);
+
+        r_seen.setVisibility(View.GONE);
+        deleteStory.setVisibility(View.GONE);
 
         UserID = getIntent().getStringExtra("user");
+        if (UserID.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            r_seen.setVisibility(View.VISIBLE);
+            deleteStory.setVisibility(View.VISIBLE);
+        }
         getStories(UserID);
         getUserInfo(UserID);
 
@@ -92,19 +110,32 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
         });
         skip.setOnTouchListener(onTouchListener);
 
+        deleteStory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story")
+                        .child(UserID).child(storries.get(counter));
+                reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()){
+                            Toast.makeText(DisplayStoryActivity.this, "Story Deleted", Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    }
+                });
+            }
+        });
+
     }
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 
     @Override
     public void onNext() {
-        if (counter + 1 >= images.size()){
-            return;
-        }
+
         Picasso.get().load(images.get(++counter)).into(storyPhoto);
+        addView(storries.get(counter));
+        getNumber(storries.get(counter));
 
     }
 
@@ -114,6 +145,8 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
             return;
         }
         Picasso.get().load(images.get(++counter)).into(storyPhoto);
+        getNumber(storries.get(counter));
+
     }
 
     @Override
@@ -157,7 +190,7 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
         images = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story")
                 .child(user);
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 storries.clear();
@@ -173,8 +206,15 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
                 storiesProgressView.setStoriesCount(images.size());
                 storiesProgressView.setStoryDuration(5000L);
                 storiesProgressView.setStoriesListener(DisplayStoryActivity.this);
-                storiesProgressView.startStories(counter);
+                try{
+                    storiesProgressView.startStories(counter);
+
+                } catch (Exception e){
+                    finish();
+                }
                 Picasso.get().load(images.get(counter)).into(storyPhoto);
+                addView(storries.get(counter));
+                getNumber(storries.get(counter));
             }
 
             @Override
@@ -195,6 +235,34 @@ public class DisplayStoryActivity extends AppCompatActivity implements StoriesPr
                         .into(USrPhoto);
                 StoryUsrName.setText(user1.getUsername());
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void addView(String story){
+        FirebaseDatabase.getInstance().getReference("Story").child(UserID)
+                .child(story)
+                .child("views")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue("true");
+
+    }
+
+    private void getNumber(String story){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Story").child(UserID)
+                .child(story)
+                .child("views");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    seenCount.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                }
             }
 
             @Override

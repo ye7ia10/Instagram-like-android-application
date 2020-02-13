@@ -32,6 +32,8 @@ public class StoryActivity extends AppCompatActivity {
     private StorageReference reference;
     private StorageTask task;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
