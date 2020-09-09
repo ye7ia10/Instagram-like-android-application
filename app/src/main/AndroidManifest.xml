@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.myins">
+    package="com.yehiaelsayed.myins">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -13,17 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DisplayStoryActivity"></activity>
-        <activity android:name=".StoryActivity" />
-        <activity android:name=".CommentsActivity" />
-        <activity android:name=".PostActivity" />
-        <activity android:name=".AccountSettingsActivity" />
+        <activity android:name="com.yehiaelsayed.myins.DisplayStoryActivity"></activity>
+        <activity android:name="com.yehiaelsayed.myins.StoryActivity" />
+        <activity android:name="com.yehiaelsayed.myins.CommentsActivity" />
+        <activity android:name="com.yehiaelsayed.myins.PostActivity" />
+        <activity android:name="com.yehiaelsayed.myins.AccountSettingsActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.yehiaelsayed.myins.SignUpActivity" />
+        <activity android:name="com.yehiaelsayed.myins.SignInActivity" />
+        <activity android:name="com.yehiaelsayed.myins.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
